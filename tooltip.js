@@ -1,7 +1,10 @@
 class Tooltip extends HTMLElement {
     constructor() {
         super();
-        console.log("It is working!");
+        const tooltipIcon = document.createElement('span');
+        tooltipIcon.textContent = ' (?)';
+        // to access web component object
+        this.appendChild(tooltipIcon);
     }
 }
 
