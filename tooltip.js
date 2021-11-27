@@ -64,6 +64,15 @@ class Tooltip extends HTMLElement {
 
     }
 
+    attributeChangedCallback(name, oldValue, newValue) {
+        console.log(name, oldValue, newValue)
+    }
+
+    static get observedAttributes() {
+        return ['text'];
+        // return ['text', 'class'];
+    }
+
     // this indicates means this method will only call by this class itself.
     _showTooltip() {
         this._tooltipContainer = document.createElement('div');
