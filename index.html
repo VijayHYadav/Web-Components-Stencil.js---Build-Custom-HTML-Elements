@@ -9,6 +9,10 @@
         div {
             border: 2px solid orange;
         }
+
+        .highlight {
+            background-color: rgb(243, 192, 158);
+        }
     </style>
     <script src="tooltip.js"></script>
     <script src="confirm-link.js"></script>
@@ -17,9 +21,11 @@
     <!-- <template id="tooltip-template">
         <slot>Some Default</slot><span> (?)</span>
     </template> -->
-    <p><uc-tooltip text="Web Components is a set of standards">Web Components</uc-tooltip>  are awesome!</p>
-    <p><uc-tooltip>Web Components</uc-tooltip>  are awesome!</p>
-    <uc-tooltip>Here we go!</uc-tooltip>
+    <p>
+        <uc-tooltip text="Web Components is a set of standards">
+           <span class="highlight"> Web Components </span>
+        </uc-tooltip> are awesome!
+    </p>
     <uc-tooltip></uc-tooltip>
     <div>This does not get the web components styles!</div>
     <a is="uc-confirm-link" href="https://www.google.com">Google</a>
