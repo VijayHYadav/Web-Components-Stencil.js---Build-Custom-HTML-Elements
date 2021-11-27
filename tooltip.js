@@ -4,8 +4,9 @@
 class Tooltip extends HTMLElement {
     constructor() {
         super();
-        this._tooltipContainer;
+        // this._tooltipContainer;
         this._tooltipIcon;
+        this._tooltipVisible = false;
         this._tooltipText = 'Some dummy tooltip text.';
         this.attachShadow({ mode: 'open' })
         // const template = document.querySelector('#tooltip-template')
@@ -62,6 +63,7 @@ class Tooltip extends HTMLElement {
         // to access web component object
         this.shadowRoot.appendChild(this._tooltipIcon);
         this.style.position = 'relative'
+        this._render();
 
     }
 
@@ -87,16 +89,34 @@ class Tooltip extends HTMLElement {
         this._tooltipIcon.removeEventListener('mouseleave', this._hideTooltip);
     }
 
+    _render() {
+        let tooltipContainer = this.shadowRoot.querySelector('div');
+        if (this._tooltipVisible) {
+            tooltipContainer = document.createElement('div');
+            tooltipContainer.textContent = this._tooltipText;
+
+            this.shadowRoot.appendChild(tooltipContainer);
+        } else {
+            if (tooltipContainer) {
+                this.shadowRoot.removeChild(tooltipContainer);
+            }
+        }
+    }
+
     // this indicates means this method will only call by this class itself.
     _showTooltip() {
-        this._tooltipContainer = document.createElement('div');
-        this._tooltipContainer.textContent = this._tooltipText;
+        this._tooltipVisible = true;
+        this._render();
+        // this._tooltipContainer = document.createElement('div');
+        // this._tooltipContainer.textContent = this._tooltipText;
 
-        this.shadowRoot.appendChild(this._tooltipContainer);
+        // this.shadowRoot.appendChild(this._tooltipContainer);
     }
 
     _hideTooltip() {
-        this.shadowRoot.removeChild(this._tooltipContainer);
+        this._tooltipVisible = false;
+        this._render();
+        // this.shadowRoot.removeChild(this._tooltipContainer);
     }
 }
 
