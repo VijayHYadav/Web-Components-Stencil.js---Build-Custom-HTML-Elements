@@ -1,4 +1,5 @@
 // IMP: if you want to style ANY slotted content, you can use ::slotted(*).
+// :host(*) || :host(.important)
 // Light DOM styling overrides shadom-dom(slot) styling.
 class Tooltip extends HTMLElement {
     constructor() {
@@ -18,7 +19,7 @@ class Tooltip extends HTMLElement {
                     z-index: 10;
                 }
 
-                :host {
+                :host(.important) {
                     background: #ccc;
                 }
 
