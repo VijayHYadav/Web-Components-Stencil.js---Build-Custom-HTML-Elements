@@ -5,6 +5,7 @@ class Tooltip extends HTMLElement {
     constructor() {
         super();
         this._tooltipContainer;
+        this._tooltipIcon;
         this._tooltipText = 'Some dummy tooltip text.';
         this.attachShadow({ mode: 'open' })
         // const template = document.querySelector('#tooltip-template')
@@ -55,11 +56,11 @@ class Tooltip extends HTMLElement {
         if (this.hasAttribute('text')) {
             this._tooltipText = this.getAttribute('text');
         }
-        const tooltipIcon = this.shadowRoot.querySelector('span');
-        tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this));
-        tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this));
+        this._tooltipIcon = this.shadowRoot.querySelector('span');
+        this._tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this));
+        this._tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this));
         // to access web component object
-        this.shadowRoot.appendChild(tooltipIcon);
+        this.shadowRoot.appendChild(this._tooltipIcon);
         this.style.position = 'relative'
 
     }
@@ -79,14 +80,17 @@ class Tooltip extends HTMLElement {
         // return ['text', 'class'];
     }
 
+    disconnectedCallback() {
+        // may clean up http request you are doing or some clean up stuff.
+        console.log('Disconnected!')
+        this._tooltipIcon.removeEventListener('mouseenter', this._showTooltip);
+        this._tooltipIcon.removeEventListener('mouseleave', this._hideTooltip);
+    }
+
     // this indicates means this method will only call by this class itself.
     _showTooltip() {
         this._tooltipContainer = document.createElement('div');
         this._tooltipContainer.textContent = this._tooltipText;
-        // this._tooltipContainer.style.backgroundColor = 'black';
-        // this._tooltipContainer.style.color = 'white';
-        // this._tooltipContainer.style.position = 'absolute';
-        // this._tooltipContainer.style.zIndex = '10';
 
         this.shadowRoot.appendChild(this._tooltipContainer);
     }
